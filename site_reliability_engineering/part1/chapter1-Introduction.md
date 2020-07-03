@@ -6,6 +6,8 @@
 
 It is a truth universally acknowledged that systems do not run themselves. How, then, *should* a system—particularly a complex computing system that operates at a large scale—be run?
 
+> システムは自分自身では動かないということは、普遍的に認められている真実です。では、システム、特に大規模に動作する複雑なコンピューティングシステムは、どのようにして実行されるべきなのでしょうか?
+
 
 
 システムは自分自身では動かないということは普遍的に認められている事実です。
@@ -21,7 +23,11 @@ It is a truth universally acknowledged that systems do not run themselves. How, 
 
 ## The Sysadmin Approach to Service Management
 
-Historically, companies have employed systems administrators to run complex com‐ puting systems.
+----
+
+
+
+Historically, companies have employed systems administrators to run complex computing systems.
 
 This systems administrator, or sysadmin, approach involves assembling existing soft‐ ware components and deploying them to work together to produce a service. Sysadmins are then tasked with running the service and responding to events and updates as they occur. As the system grows in complexity and traffic volume, generat‐ ing a corresponding increase in events and updates, the sysadmin team grows to absorb the additional work. Because the sysadmin role requires a markedly different skill set than that required of a product’s developers, developers and sysadmins are divided into discrete teams: “development” and “operations” or “ops.”
 
@@ -37,13 +43,23 @@ Traditional operations teams and their counterparts in product development thus 
 
 Both groups understand that it is unacceptable to state their interests in the baldest possible terms (“We want to launch anything, any time, without hindrance” versus “We won’t want to ever change anything in the system once it works”). And because their vocabulary and risk assumptions differ, both groups often resort to a familiar form of trench warfare to advance their interests. The ops team attempts to safeguard the running system against the risk of change by introducing launch and change gates. For example, launch reviews may contain an explicit check for *every* problem that has *ever* caused an outage in the past—that could be an arbitrarily long list, with not all elements providing equal value. The dev team quickly learns how to respond. They have fewer “launches” and more “flag flips,” “incremental updates,” or “cherry‐ picks.” They adopt tactics such as sharding the product so that fewer features are sub‐ ject to the launch review.
 
+> 歴史的に、企業は複雑なコンピューティングシステムを実行するためにシステム管理者を採用してきました。
+>
+> このシステム管理者（システム管理者）のアプローチでは、既存のソフトウェアコンポーネントを組み立て、サービスを生成するためにそれらを一緒に動作するように配置する必要があります。システム管理者は、サービスを実行し、発生したイベントや更新に対応することを任務としています。システムが複雑さとトラフィック量を増し、イベントや更新が増加すると、システム管理者チームは追加の作業を吸収するために成長します。システム管理者の役割は、製品の開発者に必要とされるスキルセットとは著しく異なるスキルセットを必要とするため、開発者とシステム管理者は別々のチームに分けられます。"開発」と「運用」または「OPS」です。
+>
+> サービス管理のシステム管理者モデルには、いくつかの利点があります。サービスをどのように運営し、スタッフを配置するかを決定している企業にとって、このアプローチは比較的簡単に実装することができます。関連する人材プールがすでに広く利用可能である。既存のツール、ソフトウェアコンポーネント（既製品であってもそうでなくても）、統合会社が、これらの組み立てられたシステムの実行を支援するために利用できるので、初心者のシステム管理者チームは、車輪を再発明して、ゼロからシステムを設計する必要はありません。
+>
+> システム管理者のアプローチとそれに伴う開発/運用の分割には、多くの欠点と落とし穴があります。これらは大きく分けて2つのカテゴリに分類されます: 直接コストと間接コストです。
+>
+> 直接コストは微妙でも曖昧でもありません。変更管理とイベント処理の両方を手作業に頼っているチームでサービスを運営していると、サービスやサービスへのトラフィックが大きくなるにつれてコストが高くなります。
+>
+> 開発/運用の分割の間接的なコストは微妙ですが、組織にとっては直接的なコストよりも高額になることが多いです。これらのコストは、2つのチームが背景、スキルセット、インセンティブが全く異なるという事実から生じる。状況を説明するために異なる語彙を使用し、リスクと技術的解決策の可能性の両方について異なる仮定を持ち、製品の安定性の目標レベルについて異なる仮定を持っています。グループ間の分裂は、インセンティブだけでなく、コミュニケーション、目標、そして最終的には信頼と尊敬の問題になりやすい。この結果は病理である。
+>
+> このように、従来のオペレーションチームと製品開発チームの間では、ソフトウェアをいかに早く製品にリリースできるかという点で対立が生じることがよくあります。開発チームは、新機能をリリースして、それがユーザーに採用されるのを見たいと考えています。一方、運用チームは、ポケベルを持っている間にサービスが中断しないことを確認したいと考えています。ほとんどの停止は、新しい設定、新しい機能の立ち上げ、または新しいタイプのユーザー・トラヒックなどの何らかの変化によって引き起こされるため、2 つのチームの目標は根本的に緊張状態にあります。
+>
+> 両チームとも、自分たちの利益を可能な限りはっきりとした言葉で表現することは受け入れられないことを理解しています（「いつでも、何でも、何の支障もなく起動させたい」と「システムが動作したら、何も変更したくない」ということです）。そして、彼らの語彙とリスクの前提条件が異なるため、両グループはしばしば自分たちの利益を前進させるために、お馴染みの塹壕戦の形に頼る。運用チームは、起動と変更のゲートを導入することで、変更のリスクに対して実行中のシステムを保護しようとします。例えば、起動時のレビューでは、過去に障害を起こしたことのあるすべての*問題を明示的にチェックすることができます。開発チームは、どのように対応すべきかをすぐに理解します。彼らは「起動」を減らし、「フラグの反転」や「インクリメンタルアップデート」、「チェリーピック」を増やしています。製品をシャーディングして、ローンチレビューの対象となる機能が少なくなるようにするなどの戦術を採用します。
 
 
-
-
-
-
-## The Sysadmin Approach to Service Management
 
 歴史的に、企業は複雑なコンピュータシステムを実行するためにシステム管理者を雇用してきました。
 
@@ -226,6 +242,10 @@ Both groups understand that it is unacceptable to state their interests in the b
 
 ## Google’s Approach to Service Management: Site Reliability Engineering
 
+------
+
+
+
 Conflict isn’t an inevitable part of offering a software service. Google has chosen to run our systems with a different approach: our Site Reliability Engineering teams focus on hiring software engineers to run our products and to create systems to accomplish the work that would otherwise be performed, often manually, by sysadmins.
 
 What exactly is Site Reliability Engineering, as it has come to be defined at Google? My explanation is simple: SRE is what happens when you ask a software engineer to design an operations team. When I joined Google in 2003 and was tasked with run‐ ning a “Production Team” of seven engineers, my entire life up to that point had been software engineering. So I designed and managed the group the way *I* would want it to work if I worked as an SRE myself. That group has since matured to become Goo‐ gle’s present-day SRE team, which remains true to its origins as envisioned by a life‐ long software engineer.
@@ -254,21 +274,33 @@ compete for the same candidates as the product development hiring pipeline, but 
 
 
 
+> ソフトウェアサービスを提供する上で、紛争は避けられないものではありません。Googleのサイト信頼性エンジニアリングチームは、ソフトウェアエンジニアを採用して製品を稼働させ、通常はシスアドが手作業で行っていた作業を達成するためのシステムを構築することに注力しています。
+>
+> Googleで定義されるようになったサイト信頼性エンジニアリングとは、具体的にはどのようなものなのでしょうか？私の説明は簡単です。SREとは、ソフトウェアエンジニアに運用チームの設計を依頼することです。私が2003年にGoogleに入社し、7人のエンジニアからなる「プロダクションチーム」の運営を任されたとき、それまでの私の人生はソフトウェアエンジニアリングでした。そこで私は、もし私自身がSREとして働いていたならば、私が望むようにグループを設計し、管理しました。そのグループはその後、Goo-gleの現在のSREチームへと成長し、生涯ソフトウェアエンジニアとして働いていた人が思い描いていた原点を忠実に守っています。
+>
+> サービス管理に対する Google のアプローチの主要な構成要素は、各 SRE チームの構成です。全体として、SRE は主に 2 つのカテゴリーに分けることができます。
+>
+> 50～60%はGoogleソフトウェアエンジニア、より正確にはGoogleソフトウェアエンジニアの標準的な手順で採用された人たちである。残りの40～50％は、Googleソフトウェアエンジニアの資格に非常に近い（すなわち、必要とされるスキルセットの85～99％）候補者であり、SREには有用だが、ほとんどのソフトウェアエンジニアにとっては珍しい技術的なスキルのセットを持っていた*加えて*。我々が求める代替技術スキルの中で最も一般的なのは、UNIX システム内部とネットワーキング（レイヤ 1 からレイヤ 3）の専門知識の 2 つです。
+>
+> すべてのSREに共通しているのは、複雑な問題を解決するためにソフトウェアシステムを開発するという信念と適性です。SREでは、この2つのグループのキャリアの進捗状況を綿密に追跡していますが、これまでのところ、この2つのトラックのエンジニア間でパフォーマンスに実質的な差は見られませんでした。実際、SREチームの背景がやや多様であることから、巧妙で高品質なシステムが頻繁に生み出されていますが、それは明らかに複数のスキルセットの合成によるものです。
+>
+> 私たちのSREの採用アプローチの結果、(a) 手作業ではすぐに飽きてしまい、(b) 複雑な解決策であっても、それまでの手作業に代わるソフトウェアを書けるだけのスキルを持った人たちが集まってきました。また、SREは、開発組織の他のメンバーと学歴や知的背景を共有することになります。したがって、SRE は、従来はオペレーションチームが行っていた業務を、ソフトウェアの専門知識を持ったエンジニアを使ってファンダメンタル的に行い、また、これらのエンジニアが
+>
+> SRE チームは、人間の労働力に代わるソフトウェアによる自動化を設計し、実装する能力を本質的に持っています。
+>
+> 設計上、SRE チームがエンジニアリングに集中していることが重要です。継続的なエンジニアリングがなければ、業務負荷は増加し、チームは業務負荷に追いつくために人員を増やさなければならなくなります。最終的には、従来のオペレーションに焦点を当てたグループは、サービスの規模に応じて直線的に拡大していきます。サービスがサポートする製品が成功すれば、運用負荷はトラフィックに応じて増加します。つまり、同じ作業を何度も何度も行うために、より多くの人を雇うことになります。
+>
+> この運命を避けるためには、サービスを管理するチームがコーディングする必要があります。そのため、Google は、チケット、オンコール、マニュアルタスクなど、すべての SREs* の「OPS」作業の総量に 50% の上限を設けています。この上限は、SREチームがサービスを安定して運用可能な状態にするために十分な時間をスケジュールに確保できるようにするためのものです。この上限は上限であり、時間が経つにつれて、SREチームは自分たちのデバイスに任せておけば、運用負荷はほとんどなく、ほとんど開発タスクに専念できるようになるはずです。実際には、規模の拡大や新機能の追加によって、SREは常に足元をすくわれることになります。
+>
+> Googleの経験則では、SREチームは残りの50%の時間を実際に開発に費やす必要があります。では、どのようにしてその閾値を守るのでしょうか？まず第一に、SREの時間がどのように費やされているかを測定する必要があります。その測定結果をもとに、開発業務に費やしている時間が一貫して50%未満であるチームが、プラクティスを変更するようにします。多くの場合、これは運用負担の一部を開発チームにシフトしたり、チームに追加の運用責任を割り当てずにスタッフを追加したりすることを意味します。運用業務と開発業務のバランスを意識的に維持することで、SRE が創造的で自律的なエンジニアリングに従事するための帯域幅を確保しつつ、サービスを運営する上での運用サイドから得た知恵を維持することが可能になります。
+>
+> 大規模システムを運用するための Google SRE のアプローチには、多くの利点があることがわかりました。SRE は Google のシステムを自分たちで動かすことを追求するためにコードを直接修正しているため、SRE チームは迅速な革新性と変化の受容性の両方を特徴としています。このようなチームは比較的安価であり、同じサービスをOPS志向のチームにアップポートするには、かなり多くの人数が必要になります。その代わり、システムの運用、保守、改善に必要な SRE の数は、システムの規模に応じて従属的に変化します。最終的に、SRE は開発者と運用担当者が分断されていた機能不全を回避できるだけでなく、この構造は製品開発チームを改善することにもなります。
+>
+> このような正味の利益にもかかわらず、SRE モデルには独自の課題があるのが特徴です。Google が直面している継続的な課題の 1 つは、SRE の採用です。
+>
+> 製品開発の採用パイプラインと同じ候補者を競い合っていますが、コーディングとシステム・エンジニアリング・スキルの両方の面で採用基準を非常に高く設定しているという事実は、当社の採用プールが必ずしも少ないことを意味しています。私たちの分野は比較的新しく、ユニークなものであるため、SREチームをどのように構築し、管理するかについての業界の情報はあまりありません（ただし、本書がその方向性を前進させてくれることを期待しています）。また、一度SREチームが設置されると、サービス管理に対する彼らの潜在的に異例なアプローチには、強力な管理者のサポートが必要になります。例えば、エラー予算が枯渇したら、四半期の残りのリリースを停止するという決定は、製品開発チームが経営陣の指示に従わない限り、受け入れられないかもしれません。
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-## Google's Approach to Service Management: Site Reliability Engineering 
 
 
 
@@ -474,17 +506,23 @@ Google が直面している継続的な課題の 1 つは、
 
 
 
+
+
+
+
+
+
 ## DevOps or SRE?
+
+-------
+
+
 
 The term “DevOps” emerged in industry in late 2008 and as of this writing (early 2016) is still in a state of flux. Its core principles—involvement of the IT function in each phase of a system’s design and development, heavy reliance on automation ver‐ sus human effort, the application of engineering practices and tools to operations tasks—are consistent with many of SRE’s principles and practices. One could view DevOps as a generalization of several core SRE principles to a wider range of organi‐ zations, management structures, and personnel. One could equivalently view SRE as a specific implementation of DevOps with some idiosyncratic extensions.
 
+> DevOps」という用語は2008年後半に業界に登場し、この記事を書いている時点（2016年初頭）ではまだ流動的な状態にある。その中核となる原則、すなわち、システムの設計と開発の各フェーズに IT 機能を関与させること、人手を必要としない自動化への依存度が高いこと、エンジニアリング手法とツールを運用タスクに適用することは、SRE の原則と実践の多くと一致しています。DevOps は、いくつかの SRE のコアとなる原則を、より広範な組織、管理構造、人材に一般化したものと考えることができます。また、SREをDevOpsの特定の実装にいくつかの特殊な拡張を加えたものと見なすこともできます。
 
 
-
-
-
-
-## DevOps or SRE？
 
 DevOps」という用語は
 
@@ -510,17 +548,21 @@ DevOps は、いくつかの SRE のコアとなる原則を、より広範な�
 
 ## Tenets of SRE
 
+--------
+
+
+
 While the nuances of workflows, priorities, and day-to-day operations vary from SRE team to SRE team, all share a set of basic responsibilities for the service(s) they sup‐ port, and adhere to the same core tenets. In general, an SRE team is responsible for the *availability, latency, performance,* *efficiency,* *change management, monitoring, emergency response, and capacity planning* of their service(s). We have codified rules of engagement and principles for how SRE teams interact with their environment— not only the production environment, but also the product development teams, the testing teams, the users, and so on. Those rules and work practices help us to main‐ tain our focus on engineering work, as opposed to operations work.
 
 The following section discusses each of the core tenets of Google SRE.
 
+> ワークフロー、優先順位、および日々の運用のニュアンスは SRE チームによって異なりますが、すべての SRE チームは自分たちが担当するサービスに対する基本的な責任を共有しており、同じコア・テニュアを順守しています。一般的に、SRE チームは、サービスの *可用性、レイテンシー、パフォーマンス、*効率性、*変更管理、監視、緊急対応、およびキャパシティプランニング* に責任を負います。本番環境だけでなく、製品開発チーム、テストチーム、ユーザーなどの環境とSREチームがどのように相互作用するかについて、当社では就業規則と原則を成文化しています。これらのルールや作業方法は、運用業務ではなく、エンジニアリング業務に重点を置くことを可能にしてくれます。
+>
+> 次のセクションでは、Google SRE の中核的な考え方をそれぞれ説明します。
 
 
 
 
-
-
-## Tenets of SRE
 
 - ワークフロー、
 - 優先順位、
@@ -572,17 +614,23 @@ The following section discusses each of the core tenets of Google SRE.
 
 ## Ensuring a Durable Focus on Engineering
 
+--------
+
+
+
 As already discussed, Google caps operational work for SREs at 50% of their time. Their remaining time should be spent using their coding skills on project work. In practice, this is accomplished by monitoring the amount of operational work being done by SREs, and redirecting excess operational work to the product development teams: reassigning bugs and tickets to development managers, [re]integrating devel‐ opers into on-call pager rotations, and so on. The redirection ends when the operational load drops back to 50% or lower. This also provides an effective feedback mechanism, guiding developers to build systems that don’t need manual intervention. This approach works well when the entire organization—SRE and development alike —understands why the safety valve mechanism exists, and supports the goal of hav‐ ing no overflow events because the product doesn’t generate enough operational load to require it.
 
 When they are focused on operations work, on average, SREs should receive a maxi‐ mum of two events per 8–12-hour on-call shift. This target volume gives the on-call engineer enough time to handle the event accurately and quickly, clean up and restore normal service, and then conduct a postmortem. If more than two events occur regularly per on-call shift, problems can’t be investigated thoroughly and engi‐ neers are sufficiently overwhelmed to prevent them from learning from these events. A scenario of pager fatigue also won’t improve with scale. Conversely, if on-call SREs consistently receive fewer than one event per shift, keeping them on point is a waste of their time.
 
 Postmortems should be written for all significant incidents, regardless of whether or not they paged; postmortems that did not trigger a page are even more valuable, as they likely point to clear monitoring gaps. This investigation should establish what happened in detail, find all root causes of the event, and assign actions to correct the problem or improve how it is addressed next time. Google operates under a *blame- free postmortem culture*, with the goal of exposing faults and applying engineering to fix these faults, rather than avoiding or minimizing them.
 
+> すでに議論されているように、GoogleはSREの運用業務の時間を50%に制限している。残りの時間は、彼らのコーディングスキルを使ってプロジェクト作業に費やすべきである。実際には、SREが行っている運用業務の量を監視し、過剰な運用業務を製品開発チームにリダイレクトすることで、これを実現している：バグやチケットを開発マネージャに割り当て直したり、オンコールのページャーのローテーションに開発者を[再]統合したり。リダイレクションは、運用負荷が50%以下に低下した時点で終了する。これはまた、効果的なフィードバックメカニズムを提供し、開発者が手動介入を必要としないシステムを構築するように誘導する。このアプローチは、安全弁メカニズムが存在する理由を理解し、製品が必要とするほどの運用負荷を発生させないためにオーバーフローイベントを発生させないという目標をサポートしている場合に、組織全体（RE と開発の両方）がうまく機能します。
+>
+> SRE が運用作業に集中している場合、平均して、SRE は 8-12 時間のオンコールシフトあたり最大でも 2 つのイベントを受け取るべきである。この目標量であれば、オンコールエンジニアには、イベントを正確かつ迅速に処理し、清掃して通常のサービスを回復させ、その後死後診断を行うのに十分な時間を与えることができます。オンコール・シフトごとに 2 つ以上のイベントが定期的に発生する場合、問題を徹底的に調査することができず、技術者は十分に圧倒されて、これらのイベントから学習することができなくなります。ポケベル疲労のシナリオも、規模が大きくなっても改善されません。逆に、オンコールの SRE がシフトごとに一貫して 1 件未満のイベントを受信している場合、オンコールを維持することは時間の浪費である。
+>
+> ページャーが発生したかどうかに関わらず、すべての重要なインシデントについて事後報告書を作成すべきである。ページャーが発生しなかった事後報告書は、明らかなモニタリングのギャップを指摘している可能性が高いため、さらに価値がある。この調査では、何が起こったのかを詳細に立証し、イベントのすべての根本原因を見つけ、問題を修正したり、次回以降の対応方法を改善するためのアクションを割り当てる必要があります。Google は *blame-free postmortem culture* の下で運営されており、障害を避けたり、最小化したりするのではなく、障害を明らかにし、これらの障害を修正するためにエンジニアリングを適用することを目標としています。
 
 
-
-
-## Ensuring a Durable Focus on Engineering
 
 
 
@@ -678,6 +726,10 @@ Google は、
 
 ## Pursuing Maximum Change Velocity Without Violating a Service’s SLO
 
+---------
+
+
+
 Product development and SRE teams can enjoy a productive working relationship by eliminating the structural conflict in their respective goals. The structural conflict is between pace of innovation and product stability, and as described earlier, this con‐ flict often is expressed indirectly. In SRE we bring this conflict to the fore, and then resolve it with the introduction of an *error budget*.
 
 The error budget stems from the observation that *100% is the wrong reliability target for basically everything* (pacemakers and anti-lock brakes being notable exceptions). In general, for any software service or system, 100% is not the right reliability target because no user can tell the difference between a system being 100% available and 99.999% available. There are many other systems in the path between user and ser‐ vice (their laptop, their home WiFi, their ISP, the power grid...) and those systems collectively are far less than 99.999% available. Thus, the marginal difference between 99.999% and 100% gets lost in the noise of other unavailability, and the user receives no benefit from the enormous effort required to add that last 0.001% of availability.
@@ -685,16 +737,32 @@ The error budget stems from the observation that *100% is the wrong reliability 
 If 100% is the wrong reliability target for a system, what, then, is the right reliability target for the system? This actually isn’t a technical question at all—it’s a product question, which should take the following considerations into account:
 
 - What level of availability will the users be happy with, given how they use the product?
-
 - What alternatives are available to users who are dissatisfied with the product’s availability?
-
 - What happens to users’ usage of the product at different availability levels?
 
-  The business or the product must establish the system’s availability target. Once that target is established, the error budget is one minus the availability target. A service that’s 99.99% available is 0.01% unavailable. That permitted 0.01% unavailability is the service’s *error budget*. We can spend the budget on anything we want, as long as we don’t overspend it.
+The business or the product must establish the system’s availability target. Once that target is established, the error budget is one minus the availability target. A service that’s 99.99% available is 0.01% unavailable. That permitted 0.01% unavailability is the service’s *error budget*. We can spend the budget on anything we want, as long as we don’t overspend it.
 
-  So how do we want to spend the error budget? The development team wants to launch features and attract new users. Ideally, we would spend all of our error budget taking risks with things we launch in order to launch them quickly. This basic prem‐ ise describes the whole model of error budgets. As soon as SRE activities are concep‐ tualized in this framework, freeing up the error budget through tactics such as phased rollouts and 1% experiments can optimize for quicker launches.
+So how do we want to spend the error budget? The development team wants to launch features and attract new users. Ideally, we would spend all of our error budget taking risks with things we launch in order to launch them quickly. This basic prem‐ ise describes the whole model of error budgets. As soon as SRE activities are concep‐ tualized in this framework, freeing up the error budget through tactics such as phased rollouts and 1% experiments can optimize for quicker launches.
 
-  The use of an error budget resolves the structural conflict of incentives between development and SRE. SRE’s goal is no longer “zero outages”; rather, SREs and prod‐ uct developers aim to spend the error budget getting maximum feature velocity. This change makes all the difference. An outage is no longer a “bad” thing—it is an expected part of the process of innovation, and an occurrence that both development and SRE teams manage rather than fear.
+The use of an error budget resolves the structural conflict of incentives between development and SRE. SRE’s goal is no longer “zero outages”; rather, SREs and prod‐ uct developers aim to spend the error budget getting maximum feature velocity. This change makes all the difference. An outage is no longer a “bad” thing—it is an expected part of the process of innovation, and an occurrence that both development and SRE teams manage rather than fear.
+
+> 製品開発チームと SRE チームは、それぞれの目標における構造的な対立を解消することで、生産的な作業関係を楽しむことができる。構造的な対立とは、イノベーションのペースと製品の安定性の間の対立であり、先に述べたように、この対立は間接的に表現されることが多い。SREでは、この対立を前面に出し、エラーバジェット*を導入することで解決します。
+>
+> エラーバジェットは、基本的にすべてのものに対して *100%という信頼性目標が間違っているという観察から生まれました* (ペースメーカーとアンチロックブレーキは顕著な例外です)。一般的に、どのようなソフトウェアサービスやシステムでも、100%は正しい信頼性目標ではありません。なぜなら、システムが100%利用可能であることと99.999%利用可能であることの違いをユーザーが見分けることができないからです。ユーザーとサービスの間には、他にも多くのシステム（ユーザーのラップトップ、自宅の WiFi、ISP、電力網など）が存在しますが、それらのシステムは総合的に見て 99.999%の利用可能性をはるかに下回っています。このように、99.999%と100%の間の限界的な差は、他の利用不能のノイズの中で失われ、ユーザーは、最後の0.001%の利用可能性を追加するために必要な莫大な労力から何の利益も得られません。
+>
+> 100%がシステムの信頼性目標として間違っているとしたら、システムの正しい信頼性目標は何でしょうか？これは技術的な質問ではなく、製品に関する質問であり、以下の点を考慮に入れる必要があります。
+>
+> - ユーザーが製品をどのように使用しているかを考慮して、どの程度の可用性レベルであれば満足できるか？
+>
+> - 製品の可用性に不満を持っているユーザーには、どのような代替手段があるのか？
+>
+> - 異なる可用性レベルでのユーザーの製品使用はどうなるか？
+>
+> ビジネスまたは製品は、システムの可用性目標を設定しなければなりません。その目標が設定されると、エラー・バジェットは、可用性目標から1を引いたものになります。99.99%利用可能なサービスは、0.01%利用不可です。その許可された0.01%の利用不能は、サービスの*エラー・バジェット*です。予算は使いすぎない限り、何にでも使うことができます。
+>
+> では、どのようにエラー予算を使いたいのでしょうか？開発チームは、機能をローンチして新しいユーザーを獲得したいと考えています。理想的には、エラー予算のすべてを、迅速にローンチするためにリスクを冒してローンチするものに費やしたいと考えています。この基本的な前提条件は、エラー予算のモデル全体を説明しています。SRE活動がこのフレームワークで概念化されるとすぐに、段階的なロールアウトや1%の実験のような戦術でエラーバジェットを解放することで、より迅速なローンチのために最適化することができます。
+>
+> エラーバジェットの使用は、開発と SRE の間のインセンティブの構造的な対立を解決する。SRE の目標はもはや「停止ゼロ」ではなく、むしろ SRE とプロジェクト開発者は、エラーバジェットを使って機能のベロシティを最大化することを目標としています。この変更は、すべての違いをもたらします。障害はもはや「悪いこと」ではなく、イノベーションのプロセスの一部として期待され、開発チームと SRE チームの両方が恐れるのではなく、管理しなければならない出来事です。
 
 
 
@@ -703,10 +771,6 @@ If 100% is the wrong reliability target for a system, what, then, is the right r
 
 
 
-
-
-
-## Pursuing Maximum Change Velocity Without Vilolating a Service's SLO
 
 製品開発チームと SRE チームは、それぞれの目標における構造的な対立を解消することで、
 
@@ -803,6 +867,10 @@ SRE の目標はもはや「停止ゼロ」ではなく、むしろ SRE とプ�
 
 ## Monitoring
 
+-------
+
+
+
 Monitoring is one of the primary means by which service owners keep track of a sys‐ tem’s health and availability. As such, monitoring strategy should be constructed thoughtfully. A classic and common approach to monitoring is to watch for a specific value or condition, and then to trigger an email alert when that value is exceeded or that condition occurs. However, this type of email alerting is not an effective solution: a system that requires a human to read an email and decide whether or not some type of action needs to be taken in response is fundamentally flawed. Monitoring should never require a human to interpret any part of the alerting domain. Instead, software should do the interpreting, and humans should be notified only when they need to take action.
 
 There are three kinds of valid monitoring output:
@@ -819,15 +887,23 @@ Signify that a human needs to take action, but not immediately. The system can�
 
 No one needs to look at this information, but it is recorded for diagnostic or for‐ ensic purposes. The expectation is that no one reads logs unless something else prompts them to do so.
 
+> モニタリングは、サービスオーナーがシステムの健全性と可用性を追跡するための主要な手段の一つです。そのため、モニタリング戦略は思慮深く構築する必要があります。モニタリングの古典的で一般的なアプローチは、特定の値や条件を監視し、その値を超えた場合や条件が発生した場合に電子メールアラートを起動することです。しかし、このタイプの電子メールアラートは効果的なソリューションではありません。人間が電子メールを読み、それに対して何らかのアクションを取る必要があるかどうかを判断する必要があるシステムは、根本的に欠陥があります。モニタリングでは、人間がアラート領域のどの部分を解釈する必要はありません。その代わりに、ソフトウェアが解釈を行い、人間は行動を起こす必要がある場合にのみ通知されるべきです。
+>
+> モニタリング出力には、3種類の有効な出力があります。
+>
+> *アラート
+>
+> 人間は、状況を改善するために、起こっている、または起こそうとしている何かに反応して、すぐに行動を起こす必要があることを意味します。
+>
+> *チケットのこと
+>
+> 人間が行動を起こす必要があることを示しますが、すぐにではありません。システムが自動的に対応することはできませんが、数日後に人間が対応すれば、被害は発生しません。
+>
+> *ロギング
+>
+> 誰もこの情報を見る必要はありませんが、診断のために記録されています。誰もログを読まないということは、何か他のことをしない限り、誰も読まないということです。
 
 
-
-
-
-
-
-
-## Monitoring
 
 モニタリングは、
 
@@ -875,19 +951,17 @@ No one needs to look at this information, but it is recorded for diagnostic or f
 
 ## Emergency Response
 
+-------
+
+
+
 Reliability is a function of mean time to failure (MTTF) and mean time to repair (MTTR) [Sch15]. The most relevant metric in evaluating the effectiveness of emer‐ gency response is how quickly the response team can bring the system back to health —that is, the MTTR.
 
 Humans add latency. Even if a given system experiences more *actual* failures, a sys‐ tem that can avoid emergencies that require human intervention will have higher availability than a system that requires hands-on intervention. When humans are necessary, we have found that thinking through and recording the best practices ahead of time in a “playbook” produces roughly a 3x improvement in MTTR as com‐ pared to the strategy of “winging it.” The hero jack-of-all-trades on-call engineer does work, but the practiced on-call engineer armed with a playbook works much better. While no playbook, no matter how comprehensive it may be, is a substitute for smart engineers able to think on the fly, clear and thorough troubleshooting steps and tips are valuable when responding to a high-stakes or time-sensitive page. Thus, Google SRE relies on on-call playbooks, in addition to exercises such as the “Wheel of Mis‐ fortune,”2 to prepare engineers to react to on-call events.
 
-
-
-
-
-
-
-
-
-## Emergencey Response
+> 信頼性は、平均故障時間(MTTF)と平均修復時間(MTTR)の関数です[Sch15]。緊急時対応の有効性を評価する上で最も適切な指標は、対応チームがどれだけ早くシステムを健全な状態に戻すことができるか、つまりMTTRです。
+>
+> 人間は待ち時間を追加します。与えられたシステムがより多くの実際の障害を経験したとしても、人間の介入を必要とする緊急事態を回避できるシステムは、ハンズオンの介入を必要とするシステムよりも高い可用性を持っています。人間が必要な場合には、「プレイブック」に事前にベスト・プラクティスを考え抜いて記録しておくことで、MTTR の改善効果は、「それに耐える」戦略と比較して約 3 倍になることがわかりました。ヒーローのオールマイティなオンコールエンジニアはうまくいきますが、プレイブックで武装した実践的なオンコールエンジニアの方がはるかにうまくいきます。どんなに包括的なプレイブックであっても、その場で考えることができるスマートなエンジニアの代わりにはなりませんが、明確で徹底したトラブルシューティングの手順やヒントは、高額なリスクや時間のかかるページに対応する際には貴重なものとなります。このように、Google SRE は、「Wheel of Mis-fortune」2 のような演習に加えて、オンコールのプレイブックを利用して、エンジニアがオンコールのイベントに対応できるように準備しています。
 
 
 
@@ -927,21 +1001,29 @@ Humans add latency. Even if a given system experiences more *actual* failures, a
 
 ## Change Management
 
+---------
+
+
+
 SRE has found that roughly 70% of outages are due to changes in a live system. Best practices in this domain use automation to accomplish the following:
 
 - Implementing progressive rollouts
-
 - Quickly and accurately detecting problems
-
 - Rolling back changes safely when problems arise
 
-  This trio of practices effectively minimizes the aggregate number of users and opera‐ tions exposed to bad changes. By removing humans from the loop, these practices avoid the normal problems of fatigue, familiarity/contempt, and inattention to highly repetitive tasks. As a result, both release velocity and safety increase.
+This trio of practices effectively minimizes the aggregate number of users and opera‐ tions exposed to bad changes. By removing humans from the loop, these practices avoid the normal problems of fatigue, familiarity/contempt, and inattention to highly repetitive tasks. As a result, both release velocity and safety increase.
+
+> SRE は、停止の約 70% がライブシステムの変更によるものであることを発見しました。このドメインのベストプラクティスでは、以下のことを達成するために自動化を使用しています。
+>
+> - プログレッシブなロールアウトの実装
+>
+> - 問題点を迅速かつ正確に検出
+>
+> - 問題が発生した場合に安全に変更をロールバック
+>
+> この3つのプラクティスは、悪い変更にさらされるユーザと操作部の総数を効果的に最小化します。人間をループから外すことで、これらのプラクティスは、疲労、親しみやすさ/軽蔑、反復性の高いタスクへの不注意といった通常の問題を回避します。その結果、リリース速度と安全性の両方が向上します。
 
 
-
-
-
-## Change Management
 
 SRE は、停止の約 70% がライブシステムの変更によるものであることを発見しました。
 
@@ -977,25 +1059,31 @@ SRE は、停止の約 70% がライブシステムの変更によるもので�
 
 ## Demand Forecasting and Capacity Planning
 
+--------
+
+
+
 Demand forecasting and capacity planning can be viewed as ensuring that there is sufficient capacity and redundancy to serve projected future demand with the required availability. There’s nothing particularly special about these concepts, except that a surprising number of services and teams don’t take the steps necessary to ensure that the required capacity is in place by the time it is needed. Capacity plan‐ ning should take both organic growth (which stems from natural product adoption and usage by customers) and inorganic growth (which results from events like feature launches, marketing campaigns, or other business-driven changes) into account.
 
 Several steps are mandatory in capacity planning:
 
 1. - An accurate organic demand forecast, which extends beyond the lead time required for acquiring capacity
-
    - An accurate incorporation of inorganic demand sources into the demand forecast
-
    - Regular load testing of the system to correlate raw capacity (servers, disks, and so on) to service capacity
 
-     Because capacity is critical to availability, it naturally follows that the SRE team must be in charge of capacity planning, which means they also must be in charge of provi‐ sioning.
+2. Because capacity is critical to availability, it naturally follows that the SRE team must be in charge of capacity planning, which means they also must be in charge of provi‐ sioning.
+
+> SRE は、停止の約 70% がライブシステムの変更によるものであることを発見しました。このドメインのベストプラクティスでは、以下のことを達成するために自動化を使用しています。
+>
+> - プログレッシブなロールアウトの実装
+>
+> - 問題点を迅速かつ正確に検出
+>
+> - 問題が発生した場合に安全に変更をロールバック
+>
+> この3つのプラクティスは、悪い変更にさらされるユーザと操作部の総数を効果的に最小化します。人間をループから外すことで、これらのプラクティスは、疲労、親しみやすさ/軽蔑、反復性の高いタスクへの不注意といった通常の問題を回避します。その結果、リリース速度と安全性の両方が向上します。
 
 
-
-
-
-
-
-## Demand Forecasting and Capacity Planning 
 
 需要予測とキャパシティ・プランニングは、
 
@@ -1031,17 +1119,21 @@ Several steps are mandatory in capacity planning:
 
 ## Provisioning
 
+-----------
+
+
+
 Provisioning combines both change management and capacity planning. In our experience, provisioning must be conducted quickly and only when necessary, as capacity is expensive. This exercise must also be done correctly or capacity doesn’t work when needed. Adding new capacity often involves spinning up a new instance or location, making significant modification to existing systems (configuration files, load balancers, networking), and validating that the new capacity performs and deliv‐ ers correct results. Thus, it is a riskier operation than load shifting, which is often
 
 done multiple times per hour, and must be treated with a corresponding degree of extra caution.
 
+> プロビジョニングは、変更管理とキャパシティプランニングの両方を兼ね備えています。私たちの経験では、キャパシティにはコストがかかるため、プロビジョニングは迅速に実施し、必要なときだけ実施する必要があります。この作業も正しく行わなければ、キャパシティは必要なときには機能しません。新しいキャパシティを追加するには、新しいインスタンスや場所をスピンアップし、既存のシステム（構成ファイル、ロードバランサ、ネットワーキング）に大幅な変更を加え、新しいキャパシティが正しく動作し、正しい結果が得られるかどうかを検証する必要があります。このように、多くの場合、ロードシフティングよりもリスクの高い作業です。
+>
+> 1時間に複数回行われ、それに応じて特別な注意を払って処理する必要があります。
 
 
 
 
-
-
-## Provisioning
 
 プロビジョニングは、
 
@@ -1073,21 +1165,31 @@ done multiple times per hour, and must be treated with a corresponding degree of
 
 
 
+
+
+
+
+
+
+
+
 ## Efficiency and Performance
+
+------------
+
+
 
 Efficient use of resources is important any time a service cares about money. Because SRE ultimately controls provisioning, it must also be involved in any work on utiliza‐ tion, as utilization is a function of how a given service works and how it is provi‐ sioned. It follows that paying close attention to the provisioning strategy for a service, and therefore its utilization, provides a very, very big lever on the service’s total costs.
 
 Resource use is a function of demand (load), capacity, and software efficiency. SREs predict demand, provision capacity, and can modify the software. These three factors are a large part (though not the entirety) of a service’s efficiency.
 
-Software systems become slower as load is added to them. A slowdown in a service equates to a loss of capacity. At some point, a slowing system stops serving, which corresponds to infinite slowness. SREs provision to meet a capacity target *at a* *specific* *response speed*, and thus are keenly interested in a service’s performance. SREs and product developers will (and should) monitor and modify a service to improve its performance, thus adding capacity and improving efficiency.3
+Software systems become slower as load is added to them. A slowdown in a service equates to a loss of capacity. At some point, a slowing system stops serving, which corresponds to infinite slowness. SREs provision to meet a capacity target *at a* *specific* *response speed*, and thus are keenly interested in a service’s performance. SREs and product developers will (and should) monitor and modify a service to improve its performance, thus adding capacity and improving efficiency.
 
-
-
-
-
-
-
-## Efficiency and Performance
+> 資源の効率的な利用は、サービスがお金を気にするときにはいつでも重要である。SREは最終的にプロビジョニングをコントロールするため、利用率に関する作業にも関与しなければなりません。サービスのプロビジョニング戦略に細心の注意を払い、その利用率に注意を払うことは、サービスの総コストに非常に大きな影響を与えることになります。
+>
+> リソースの使用は、需要（負荷）、容量、ソフトウェアの効率性の関数です。SREは、需要を予測し、容量を提供し、ソフトウェアを修正することができます。これら3つの要因は、サービスの効率性の大部分を占めています（全体ではありませんが）。
+>
+> ソフトウェアシステムに負荷が加わると、ソフトウェアシステムは遅くなります。サービスの速度低下は、キャパシティの損失に相当します。ある時点で、遅くなったシステムはサービスを停止し、これは無限の遅さに相当します。SREは、キャパシティ・ターゲットを満たすために、ある*****特定の応答速度*で提供しているため、サービスのパフォーマンスに強い関心を持っています。SREや製品開発者は、サービスのパフォーマンスを向上させるために、サービスを監視し、修正することで、キャパシティを追加し、効率を向上させる（はずである）。
 
 
 
@@ -1150,15 +1252,15 @@ SRE と製品開発者は、サービスのパフォーマンスを向上させ�
 
 ## The End of the Beginning
 
+----------
+
+
+
 Site Reliability Engineering represents a significant break from existing industry best practices for managing large, complicated services. Motivated originally by familiarity —“as a software engineer, this is how I would want to invest my time to accomplish a set of repetitive tasks”—it has become much more: a set of principles, a set of practi‐ ces, a set of incentives, and a field of endeavor within the larger software engineering discipline. The rest of the book explores the SRE Way in detail.
 
+> サイト信頼性エンジニアリングは、大規模で複雑なサービスを管理するための既存の業界のベストプラクティスから大きく脱却したものです。もともとは、「ソフトウェアエンジニアとして、反復的なタスクを達成するために自分の時間を投資したい」という親しみやすさが動機でしたが、今ではそれ以上のものになっています：一連の原則、一連の実践方法、一連のインセンティブ、そしてより大きなソフトウェアエンジニアリングの分野における努力の分野です。本書の残りの部分では、SRE ウェイについて詳しく説明しています。
 
 
-
-
-
-
-## The End of the Beginning 
 
 サイト信頼性エンジニアリングは、大規模で複雑なサービスを管理するための既存の業界のベストプラクティスから大きく脱却したものです。
 
